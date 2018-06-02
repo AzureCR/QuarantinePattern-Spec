@@ -87,11 +87,13 @@ Registries currently support two basic roles
 When images are placed in quarantine, they will not be accessible based on their image:tag reference. Image:tags are only accessible once taken out of quarantine.
 ## Registry Internal Tagging State Machine
 
-### Happy Path
+### Scenario 1: Happy Path
 1. `docker push registry.io/trojanhorse:1.0`
     > Push returns success, as per normal registry push semantics
 1. Webhook raised
+
     ![](./media/state-machine-1.png)
+
     The digest is available within the registry, with a policy of quarantined. The tag is under quarantine, and not accessible.
 1. `docker pull registry.io/trojanhorse@sha256:91ef6`
     > Vulnerability Scanning pulls the image using the digest, with a **quarantine-reader** or **quarantine-writer** role
